@@ -1,0 +1,38 @@
+{
+  "movieId": "demo_tech_talk",
+  "movieTitle": "Software Engineering Talk",
+  "youtubeVideoId": "Skug1TjJMr0",
+  "topicTags": ["tech", "business"],
+  "segments": [
+    {
+      "startMs": 3000,
+      "endMs": 10500,
+      "text": "When we deploy a new backend service, the main concern is always latency.",
+      "lemmas": ["deploy", "new", "backend", "service", "main", "concern", "always", "latency"]
+    },
+    {
+      "startMs": 13000,
+      "endMs": 20000,
+      "text": "A proper firewall and end-to-end encryption protect user data on the network.",
+      "lemmas": ["proper", "firewall", "end", "end", "encryption", "protect", "user", "data", "network"]
+    },
+    {
+      "startMs": 24000,
+      "endMs": 31000,
+      "text": "Our stack handles high throughput because we cache aggressively at every layer.",
+      "lemmas": ["stack", "handle", "high", "throughput", "cache", "aggressively", "every", "layer"]
+    },
+    {
+      "startMs": 35000,
+      "endMs": 42000,
+      "text": "Revenue grew last quarter and the pipeline looks strong for acquisitions.",
+      "lemmas": ["revenue", "grow", "last", "quarter", "pipeline", "look", "strong", "acquisition"]
+    },
+    {
+      "startMs": 46000,
+      "endMs": 53000,
+      "text": "Forecast suggests scalable margin expansion if we keep runway above 18 months.",
+      "lemmas": ["forecast", "suggest", "scalable", "margin", "expansion", "keep", "runway", "above", "month"]
+    }
+  ]
+}

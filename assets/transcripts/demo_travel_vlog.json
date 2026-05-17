@@ -1,0 +1,38 @@
+{
+  "movieId": "demo_travel_vlog",
+  "movieTitle": "City Travel Guide",
+  "youtubeVideoId": "jNQXAC9IVRw",
+  "topicTags": ["travel", "daily"],
+  "segments": [
+    {
+      "startMs": 2000,
+      "endMs": 8500,
+      "text": "We're heading to the airport early to avoid the long customs line.",
+      "lemmas": ["head", "airport", "early", "avoid", "long", "custom", "line"]
+    },
+    {
+      "startMs": 12000,
+      "endMs": 19000,
+      "text": "Our itinerary is packed — three cities in five days, with a short layover in Rome.",
+      "lemmas": ["itinerary", "pack", "three", "city", "five", "day", "short", "layover", "rome"]
+    },
+    {
+      "startMs": 22000,
+      "endMs": 29500,
+      "text": "Jet lag hit us hard, but the local currency exchange rate made up for it.",
+      "lemmas": ["jet", "lag", "hit", "hard", "local", "currency", "exchange", "rate", "make"]
+    },
+    {
+      "startMs": 34000,
+      "endMs": 41000,
+      "text": "Before boarding, I always grab a souvenir from the airport shop.",
+      "lemmas": ["before", "board", "always", "grab", "souvenir", "airport", "shop"]
+    },
+    {
+      "startMs": 45000,
+      "endMs": 52000,
+      "text": "The embassy is just a short detour from our hotel, right near the main destination.",
+      "lemmas": ["embassy", "short", "detour", "hotel", "right", "near", "main", "destination"]
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+class Routes {
+  Routes._();
+  static const splash = '/';
+  static const onboardingWelcome = '/onboarding/welcome';
+  static const onboardingInterests = '/onboarding/interests';
+  static const onboardingMovies = '/onboarding/movies';
+  static const home = '/home';
+  static const weeklyTest = '/weekly-test';
+  static const ranking = '/ranking';
+  static const profile = '/profile';
+}
