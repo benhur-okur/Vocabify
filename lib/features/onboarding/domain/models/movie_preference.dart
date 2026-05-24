@@ -17,6 +17,7 @@ class MoviePreference {
 }
 
 const mockMoviePreferences = <MoviePreference>[
+  MoviePreference(id: 'mr_robot', title: 'Mr. Robot', type: MovieType.series, year: 2015),
   MoviePreference(id: 'breaking_bad', title: 'Breaking Bad', type: MovieType.series, year: 2008),
   MoviePreference(id: 'the_office', title: 'The Office', type: MovieType.series, year: 2005),
   MoviePreference(id: 'friends', title: 'Friends', type: MovieType.series, year: 1994),
@@ -25,4 +26,5 @@ const mockMoviePreferences = <MoviePreference>[
   MoviePreference(id: 'ted_lasso', title: 'Ted Lasso', type: MovieType.series, year: 2020),
   MoviePreference(id: 'inception', title: 'Inception', type: MovieType.movie, year: 2010),
   MoviePreference(id: 'interstellar', title: 'Interstellar', type: MovieType.movie, year: 2014),
+  MoviePreference(id: 'black_mirror', title: 'Black Mirror', type: MovieType.series, year: 2011),
 ];

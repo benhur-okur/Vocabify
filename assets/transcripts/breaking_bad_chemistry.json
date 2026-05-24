@@ -1,0 +1,684 @@
+{
+  "movieId": "breaking_bad_chemistry",
+  "seriesId": "breaking_bad",
+  "movieTitle": "Breaking Bad",
+  "youtubeVideoId": "FWgAvSGE5_U",
+  "topicTags": [
+    "science",
+    "chemistry",
+    "drama"
+  ],
+  "segments": [
+    {
+      "startMs": 5480,
+      "endMs": 10780,
+      "text": "Unless you've been living under a rock, you've heard of the phenomenon known as AMC's Breaking Bad.",
+      "lemmas": [
+        "unless",
+        "you've",
+        "live",
+        "und",
+        "rock",
+        "you've",
+        "heard",
+        "phenomenon",
+        "know",
+        "amc'",
+        "break",
+        "bad"
+      ]
+    },
+    {
+      "startMs": 10780,
+      "endMs": 16039,
+      "text": "Well we got the chance to sit down with Donna Nelson, a chemistry consultant for the show to find out a few things.",
+      "lemmas": [
+        "well",
+        "get",
+        "chance",
+        "sit",
+        "down",
+        "donna",
+        "nelson",
+        "chemistry",
+        "consultant",
+        "show",
+        "find",
+        "out",
+        "few",
+        "thing"
+      ]
+    },
+    {
+      "startMs": 16039,
+      "endMs": 23590,
+      "text": "Before we get to her, here's a few things you need to know. Walter White is a high school chemistry teacher who is diagnosed with lung cancer.",
+      "lemmas": [
+        "before",
+        "get",
+        "here'",
+        "few",
+        "thing",
+        "need",
+        "know",
+        "walt",
+        "white",
+        "high",
+        "school",
+        "chemistry",
+        "teach",
+        "who",
+        "diagnos",
+        "lung",
+        "canc"
+      ]
+    },
+    {
+      "startMs": 23590,
+      "endMs": 29089,
+      "text": "He breaks bad and starts cooking methamphetamines to pay for his medical treatments and to support his family.",
+      "lemmas": [
+        "break",
+        "bad",
+        "start",
+        "cook",
+        "methamphetamine",
+        "pay",
+        "medical",
+        "treatment",
+        "support",
+        "fami"
+      ]
+    },
+    {
+      "startMs": 29089,
+      "endMs": 33980,
+      "text": "Walt's meth is the purest meth around, gaining him the nickname Heisenberg.",
+      "lemmas": [
+        "walt'",
+        "meth",
+        "pur",
+        "meth",
+        "around",
+        "gain",
+        "nickname",
+        "heisenberg"
+      ]
+    },
+    {
+      "startMs": 33980,
+      "endMs": 39400,
+      "text": "Oh and because Walt has turned into an unstoppable force in the drug dealing community.",
+      "lemmas": [
+        "oh",
+        "because",
+        "walt",
+        "turn",
+        "into",
+        "unstoppable",
+        "force",
+        "drug",
+        "deal",
+        "community"
+      ]
+    },
+    {
+      "startMs": 39400,
+      "endMs": 46899,
+      "text": "Anyway, while creating the series, Vince Gilligan, the producer of Breaking Bad, talked to Chemical and Engineering news, which Donna happened to read:",
+      "lemmas": [
+        "anyway",
+        "while",
+        "creat",
+        "sery",
+        "vince",
+        "gilligan",
+        "produc",
+        "break",
+        "bad",
+        "talk",
+        "chemical",
+        "engineer",
+        "new",
+        "which",
+        "donna",
+        "happen",
+        "read"
+      ]
+    },
+    {
+      "startMs": 46899,
+      "endMs": 56500,
+      "text": "And I saw that Vince was saying 'we really wanted to get the science right, but none of my writers and I have a science background, so we would really appreciate constructive",
+      "lemmas": [
+        "see",
+        "vince",
+        "say",
+        "'we",
+        "real",
+        "want",
+        "get",
+        "science",
+        "right",
+        "none",
+        "writer",
+        "science",
+        "background",
+        "real",
+        "appreciate",
+        "constructive"
+      ]
+    },
+    {
+      "startMs": 56500,
+      "endMs": 62230,
+      "text": "comments from a chemically-inclined audience.' So Donna made her way out to Burbank and met with the writers.",
+      "lemmas": [
+        "comment",
+        "from",
+        "chemically-inclin",
+        "audience",
+        "'",
+        "donna",
+        "make",
+        "way",
+        "out",
+        "burbank",
+        "meet",
+        "writer"
+      ]
+    },
+    {
+      "startMs": 62230,
+      "endMs": 71770,
+      "text": "They asked for her input on everything from what makes a person go into chemistry to how teachers talk to students, essentially getting Walt's motivation from a real chemist.",
+      "lemmas": [
+        "ask",
+        "input",
+        "everyth",
+        "from",
+        "what",
+        "make",
+        "person",
+        "go",
+        "into",
+        "chemistry",
+        "how",
+        "teacher",
+        "talk",
+        "student",
+        "essential",
+        "get",
+        "walt'",
+        "motivation",
+        "from",
+        "real",
+        "chemist"
+      ]
+    },
+    {
+      "startMs": 71770,
+      "endMs": 80730,
+      "text": "Eventually they moved to the more technical side. One of the specific first things that they did was a lecture that Walter was doing on",
+      "lemmas": [
+        "eventual",
+        "move",
+        "more",
+        "technical",
+        "side",
+        "one",
+        "specific",
+        "first",
+        "thing",
+        "lecture",
+        "walt",
+        "doing"
+      ]
+    },
+    {
+      "startMs": 80730,
+      "endMs": 89810,
+      "text": "alkenes to his high school kids. They sent the script by me and asked me to sort of make some suggestions and clean it",
+      "lemmas": [
+        "alkene",
+        "high",
+        "school",
+        "kid",
+        "send",
+        "script",
+        "ask",
+        "sort",
+        "make",
+        "some",
+        "suggestion",
+        "clean"
+      ]
+    },
+    {
+      "startMs": 89810,
+      "endMs": 95010,
+      "text": "up. And at the end of that they said is there anything that Walter might have written on the blackboard.",
+      "lemmas": [
+        "up",
+        "end",
+        "say",
+        "anyth",
+        "walt",
+        "write",
+        "blackboard"
+      ]
+    },
+    {
+      "startMs": 95010,
+      "endMs": 104440,
+      "text": "And I said while I can send you some alkene structures. And I did and they reproduced those exactly up on the blackboard so you can see it.",
+      "lemmas": [
+        "say",
+        "while",
+        "send",
+        "some",
+        "alkene",
+        "structure",
+        "reproduc",
+        "exact",
+        "up",
+        "blackboard",
+        "see"
+      ]
+    },
+    {
+      "startMs": 104440,
+      "endMs": 109970,
+      "text": "Breaking Bad took the steps to ensure most of the science presented on the show is accurate, down to the tiniest details.",
+      "lemmas": [
+        "break",
+        "bad",
+        "take",
+        "step",
+        "ensure",
+        "most",
+        "science",
+        "present",
+        "show",
+        "accurate",
+        "down",
+        "tini",
+        "detail"
+      ]
+    },
+    {
+      "startMs": 109970,
+      "endMs": 117640,
+      "text": "To use who are educated in science whenever we see science presented inaccurately it's like finger nails on a blackboard.",
+      "lemmas": [
+        "use",
+        "who",
+        "educat",
+        "science",
+        "whenev",
+        "see",
+        "science",
+        "present",
+        "inaccurate",
+        "like",
+        "fing",
+        "nail",
+        "blackboard"
+      ]
+    },
+    {
+      "startMs": 117640,
+      "endMs": 126320,
+      "text": "It just drives us crazy. And we can't stay immersed in the show. Along with keeping the chemistry component accurate, Breaking Bad also took their actors",
+      "lemmas": [
+        "just",
+        "drif",
+        "crazy",
+        "can't",
+        "stay",
+        "immers",
+        "show",
+        "along",
+        "keep",
+        "chemistry",
+        "component",
+        "accurate",
+        "break",
+        "bad",
+        "also",
+        "take",
+        "actor"
+      ]
+    },
+    {
+      "startMs": 126320,
+      "endMs": 133900,
+      "text": "into consideration: I remember when they first asked me some questions about the P2P method.",
+      "lemmas": [
+        "into",
+        "consideration",
+        "rememb",
+        "when",
+        "first",
+        "ask",
+        "some",
+        "question",
+        "about",
+        "p2p",
+        "method"
+      ]
+    },
+    {
+      "startMs": 133900,
+      "endMs": 142980,
+      "text": "And I said well you know there are two steps. The first step is always the same. But the second step can depend on the reducing agent.",
+      "lemmas": [
+        "say",
+        "well",
+        "know",
+        "two",
+        "step",
+        "first",
+        "step",
+        "alway",
+        "same",
+        "second",
+        "step",
+        "depend",
+        "reduc",
+        "agent"
+      ]
+    },
+    {
+      "startMs": 142980,
+      "endMs": 148120,
+      "text": "And I said well which reducing agent would you like me to use? And they said we don't know! Ah what could we use.",
+      "lemmas": [
+        "say",
+        "well",
+        "which",
+        "reduc",
+        "agent",
+        "like",
+        "use",
+        "say",
+        "don't",
+        "know",
+        "ah",
+        "what",
+        "use"
+      ]
+    },
+    {
+      "startMs": 148120,
+      "endMs": 155140,
+      "text": "So I sent them a list. And there was one that was just simply aluminum mercury and they said oh use that one!",
+      "lemmas": [
+        "send",
+        "list",
+        "one",
+        "just",
+        "simp",
+        "aluminum",
+        "mercury",
+        "say",
+        "oh",
+        "use",
+        "one"
+      ]
+    },
+    {
+      "startMs": 155140,
+      "endMs": 163180,
+      "text": "It'll be easy for the actors to say. Safety, cost, yield? Nah, they'll pick the reducing agent based on what's easiest to pronounce.",
+      "lemmas": [
+        "it'll",
+        "easy",
+        "actor",
+        "say",
+        "safety",
+        "cost",
+        "yield",
+        "nah",
+        "they'll",
+        "pick",
+        "reduc",
+        "agent",
+        "bas",
+        "what'",
+        "easi",
+        "pronounce"
+      ]
+    },
+    {
+      "startMs": 163180,
+      "endMs": 171439,
+      "text": "All of the equations on how much meth could be produced from a certain amount of methylamine is actually 100% accurate with the aluminum mercury as the reducing agent.",
+      "lemmas": [
+        "all",
+        "equation",
+        "how",
+        "much",
+        "meth",
+        "produc",
+        "from",
+        "certain",
+        "amount",
+        "methylamine",
+        "actual",
+        "100",
+        "accurate",
+        "aluminum",
+        "mercury",
+        "reduc",
+        "agent"
+      ]
+    },
+    {
+      "startMs": 171439,
+      "endMs": 177940,
+      "text": "But I mean, this is a fictional TV show. Some artistic license had to be taken.",
+      "lemmas": [
+        "mean",
+        "fictional",
+        "tv",
+        "show",
+        "some",
+        "artistic",
+        "license",
+        "take"
+      ]
+    },
+    {
+      "startMs": 177940,
+      "endMs": 184310,
+      "text": "The powder blue meth that you see is really sort of like Walter's trademark.",
+      "lemmas": [
+        "powd",
+        "blue",
+        "meth",
+        "see",
+        "real",
+        "sort",
+        "like",
+        "walter'",
+        "trademark"
+      ]
+    },
+    {
+      "startMs": 184310,
+      "endMs": 191209,
+      "text": "In real life, meth would not be powder blue like that. The meth would be colorless.",
+      "lemmas": [
+        "real",
+        "life",
+        "meth",
+        "powd",
+        "blue",
+        "like",
+        "meth",
+        "colorless"
+      ]
+    },
+    {
+      "startMs": 191209,
+      "endMs": 199860,
+      "text": "So we also know methylamine and aluminum mercury are used to create meth. But for those of you who think the show might actually give away to make illegal drugs,",
+      "lemmas": [
+        "also",
+        "know",
+        "methylamine",
+        "aluminum",
+        "mercury",
+        "used",
+        "create",
+        "meth",
+        "who",
+        "think",
+        "show",
+        "actual",
+        "give",
+        "away",
+        "make",
+        "illegal",
+        "drug"
+      ]
+    },
+    {
+      "startMs": 199860,
+      "endMs": 205129,
+      "text": "think again. Vince has involved DEA agents from the very beginning.",
+      "lemmas": [
+        "think",
+        "again",
+        "vince",
+        "involv",
+        "dea",
+        "agent",
+        "from",
+        "very",
+        "begin"
+      ]
+    },
+    {
+      "startMs": 205129,
+      "endMs": 213819,
+      "text": "I mean they approve everything that he puts on the screen. They know exactly what an illicit meth lab looks like.",
+      "lemmas": [
+        "mean",
+        "approve",
+        "everyth",
+        "put",
+        "screen",
+        "know",
+        "exact",
+        "what",
+        "illicit",
+        "meth",
+        "lab",
+        "look",
+        "like"
+      ]
+    },
+    {
+      "startMs": 213819,
+      "endMs": 220760,
+      "text": "They helped him know which critical steps to omit or make slight changes or in some",
+      "lemmas": [
+        "help",
+        "know",
+        "which",
+        "critical",
+        "step",
+        "omit",
+        "make",
+        "slight",
+        "change",
+        "some"
+      ]
+    },
+    {
+      "startMs": 220760,
+      "endMs": 228209,
+      "text": "cases things to discuss that really don't make a difference. Shows about drugs can be pretty serious and controversial.",
+      "lemmas": [
+        "case",
+        "thing",
+        "discuss",
+        "real",
+        "don't",
+        "make",
+        "difference",
+        "show",
+        "about",
+        "drug",
+        "pretty",
+        "serious",
+        "controversial"
+      ]
+    },
+    {
+      "startMs": 228209,
+      "endMs": 234389,
+      "text": "And serious questions can arise. Will it corrupt the minds of our young children? I tell them no.",
+      "lemmas": [
+        "serious",
+        "question",
+        "arise",
+        "corrupt",
+        "mind",
+        "young",
+        "child",
+        "tell",
+        "no"
+      ]
+    },
+    {
+      "startMs": 234389,
+      "endMs": 242999,
+      "text": "I think that the life style Walter is living, it doesn't glorify the drug culture at all.",
+      "lemmas": [
+        "think",
+        "life",
+        "style",
+        "walt",
+        "live",
+        "doesn't",
+        "glorify",
+        "drug",
+        "culture",
+        "all"
+      ]
+    },
+    {
+      "startMs": 242999,
+      "endMs": 247930,
+      "text": "I'm on Skylar's side.",
+      "lemmas": [
+        "i'm",
+        "skylar'",
+        "side"
+      ]
+    },
+    {
+      "startMs": 247930,
+      "endMs": 257480,
+      "text": "She's a woman and so I think she's becoming a stronger character in the show. So I'll be watching to see if she becomes stronger.",
+      "lemmas": [
+        "she'",
+        "woman",
+        "think",
+        "she'",
+        "becom",
+        "strong",
+        "charact",
+        "show",
+        "i'll",
+        "watch",
+        "see",
+        "become",
+        "strong"
+      ]
+    }
+  ]
+}

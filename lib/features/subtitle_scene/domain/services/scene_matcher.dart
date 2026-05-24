@@ -144,7 +144,7 @@ class SceneMatcher {
       final clarity = (durScore * 0.7) + (lenScore * 0.3);
 
       final titleBonus =
-          selectedMovieIds.contains(acc.movieId) ? wTitle : 0.0;
+          selectedMovieIds.contains(transcript.seriesId) ? wTitle : 0.0;
       final titleInterestOverlap =
           transcript.topicTags.where(selectedInterestIds.contains).length;
 

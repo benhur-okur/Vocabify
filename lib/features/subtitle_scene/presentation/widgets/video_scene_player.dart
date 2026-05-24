@@ -8,6 +8,12 @@ import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 import '../../../../app/theme/app_colors.dart';
 import '../../application/playability_registry.dart';
 
+// Genuine embed-block error codes from the YouTube IFrame API.
+const _kEmbedBlockErrors = {
+  YoutubeError.notEmbeddable,       // 101
+  YoutubeError.sameAsNotEmbeddable, // 150
+};
+
 /// Embedded YouTube player with robust fallback. Verified against
 /// youtube_player_iframe 5.2.x (no onInit, no YoutubePlayerValue.position).
 ///
@@ -58,6 +64,7 @@ class VideoScenePlayerState extends ConsumerState<VideoScenePlayer> {
   bool _endReached = false;
   bool _acting = false;
   bool _observedPlayback = false;
+  bool _playerReady = false; // player loaded but not yet started (cued/paused)
 
   double get _startSec => widget.startMs / 1000.0;
   double get _endSec => widget.endMs / 1000.0;
@@ -69,20 +76,26 @@ class VideoScenePlayerState extends ConsumerState<VideoScenePlayer> {
   void initState() {
     super.initState();
     if (widget.videoId.isEmpty) {
-      ref
-          .read(playabilityRegistryProvider.notifier)
-          .set(widget.videoId, Playability.blocked);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        ref
+            .read(playabilityRegistryProvider.notifier)
+            .set(widget.videoId, Playability.blocked);
+      });
       return;
     }
 
-    // If we already know this video is blocked from a previous mount, skip
-    // webview entirely.
+    // Read is safe during initState — only writes are forbidden during build.
     final prior = ref
         .read(playabilityRegistryProvider.notifier)
         .get(widget.videoId);
     if (prior == Playability.blocked) return;
 
-    _initController();
+    // Defer the state write (probing) until after the first frame.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      _initController();
+    });
   }
 
   void _initController() {
@@ -92,7 +105,7 @@ class VideoScenePlayerState extends ConsumerState<VideoScenePlayer> {
 
     final c = YoutubePlayerController.fromVideoId(
       videoId: widget.videoId,
-      autoPlay: true,
+      autoPlay: false,
       startSeconds: _startSec,
       endSeconds: _endSec,
       params: const YoutubePlayerParams(
@@ -105,22 +118,43 @@ class VideoScenePlayerState extends ConsumerState<VideoScenePlayer> {
       ),
     );
 
-    // Webview-level errors (net::ERR_*, SSL, etc.) flip us to blocked.
     c.setFullScreenListener((_) {});
     _controller = c;
 
-    // State / error observation.
     _valueSub = c.stream.listen((YoutubePlayerValue value) {
-      if (value.hasError) {
-        _markBlocked('hasError=${value.error}');
+      // Only error codes 101 and 150 mean "embed refused by owner".
+      // html5Error, invalidParam, etc. are transient and must NOT block the video.
+      if (value.hasError && _kEmbedBlockErrors.contains(value.error)) {
+        _markBlocked('embed_error_${value.error.code}');
+        return;
+      }
+      // cued / paused means the IFrame API loaded and accepted the video —
+      // the embed is not blocked. Cancel the probe and show the play button.
+      if (value.playerState == PlayerState.cued ||
+          value.playerState == PlayerState.paused) {
+        _probeTimeout?.cancel();
+        if (!mounted) return;
+        setState(() => _playerReady = true);
+      }
+      // PlayerState.playing is the fastest, most reliable playback signal.
+      if (value.playerState == PlayerState.playing) {
+        _markPlayable();
+      }
+      // Buffering means the player loaded and is fetching data — reset the
+      // probe clock so a slow connection gets a full window from this point.
+      if (value.playerState == PlayerState.buffering) {
+        _probeTimeout?.cancel();
+        _probeTimeout = Timer(const Duration(seconds: 20), () {
+          if (!_observedPlayback) _markBlocked('probe timeout after buffering');
+        });
       }
     });
 
-    // Position observation — primary path for "did playback actually start".
     _attachEndWatcher();
 
-    // Probe timeout: if we haven't seen playback in 8s, assume blocked.
-    _probeTimeout = Timer(const Duration(seconds: 8), () {
+    // Initial probe window: 20 s gives iOS WebView time to bootstrap the
+    // YouTube IFrame API before we give up.
+    _probeTimeout = Timer(const Duration(seconds: 20), () {
       if (!_observedPlayback) _markBlocked('probe timeout');
     });
   }
@@ -155,14 +189,18 @@ class VideoScenePlayerState extends ConsumerState<VideoScenePlayer> {
     });
   }
 
+  void _markPlayable() {
+    if (_observedPlayback) return;
+    _observedPlayback = true;
+    _probeTimeout?.cancel();
+    if (mounted) setState(() => _playerReady = false);
+    ref
+        .read(playabilityRegistryProvider.notifier)
+        .set(widget.videoId, Playability.playable);
+  }
+
   void _onPosition(double posSec) {
-    if (!_observedPlayback && posSec > _startSec + 0.1) {
-      _observedPlayback = true;
-      _probeTimeout?.cancel();
-      ref
-          .read(playabilityRegistryProvider.notifier)
-          .set(widget.videoId, Playability.playable);
-    }
+    if (posSec > _startSec + 0.1) _markPlayable();
     if (_acting || _endReached) return;
     if (posSec <= 0) return;
     if (posSec >= _endSec - 0.1) {
@@ -303,12 +341,31 @@ class VideoScenePlayerState extends ConsumerState<VideoScenePlayer> {
                   videoId: widget.videoId),
             ),
 
+            // Tap-to-start overlay: shown when player loaded (cued) but
+            // autoplay hasn't fired yet — required on iOS which blocks
+            // autoplay with audio without a user gesture.
+            if (_playerReady &&
+                status != Playability.blocked &&
+                widget.videoId.isNotEmpty)
+              Positioned.fill(
+                child: Container(
+                  color: Colors.black.withValues(alpha: 0.35),
+                  alignment: Alignment.center,
+                  child: _PlayButton(
+                    onTap: () async {
+                      setState(() => _playerReady = false);
+                      await _controller?.playVideo().catchError((_) {});
+                    },
+                  ),
+                ),
+              ),
+
             if (_endReached &&
                 status == Playability.playable &&
                 widget.videoId.isNotEmpty)
               Positioned.fill(
                 child: Container(
-                  color: Colors.black.withOpacity(0.4),
+                  color: Colors.black.withValues(alpha: 0.4),
                   alignment: Alignment.center,
                   child: _ReplayButton(onTap: replay),
                 ),
@@ -365,7 +422,7 @@ class _StatusChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: bg.withOpacity(0.92),
+        color: bg.withValues(alpha: 0.92),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
@@ -419,7 +476,7 @@ class _BlockedFallback extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.1),
+                  color: Colors.white.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Icon(Icons.videocam_off_rounded,
@@ -451,7 +508,7 @@ class _BlockedFallback extends StatelessWidget {
                 onPressed: onOpenExternally,
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.white,
-                  backgroundColor: Colors.white.withOpacity(0.15),
+                  backgroundColor: Colors.white.withValues(alpha: 0.15),
                   padding: const EdgeInsets.symmetric(
                       horizontal: 12, vertical: 8),
                   shape: RoundedRectangleBorder(
@@ -463,6 +520,29 @@ class _BlockedFallback extends StatelessWidget {
               ),
             ),
         ],
+      ),
+    );
+  }
+}
+
+class _PlayButton extends StatelessWidget {
+  const _PlayButton({required this.onTap});
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.white,
+      shape: const CircleBorder(),
+      elevation: 4,
+      child: InkWell(
+        customBorder: const CircleBorder(),
+        onTap: onTap,
+        child: const Padding(
+          padding: EdgeInsets.all(18),
+          child: Icon(Icons.play_arrow_rounded,
+              color: AppColors.primary, size: 36),
+        ),
       ),
     );
   }

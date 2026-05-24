@@ -69,6 +69,21 @@ class TranscriptCorpus {
 /// The manifest lists every transcript asset that ships with the app.
 /// Keep this in sync when you add new ones via the ingestion CLI.
 const transcriptManifest = <String>[
+  // Mr. Robot — official AMC channel clips (seriesId: mr_robot)
+  'assets/transcripts/mr_robot_hacks_s1e1.json',       // yt: T05Ika2h8A0 — analysis
+  'assets/transcripts/mr_robot_datacenter.json',        // yt: bK1lsI-ehL8 — analysis
+  'assets/transcripts/mr_robot_boss_hack.json',         // yt: up74xBlpe7U — official AMC
+  'assets/transcripts/mr_robot_hospitals.json',         // yt: ilj3q3DVl1g — official AMC
+  // Breaking Bad — official AMC / BytesizeScience (seriesId: breaking_bad)
+  'assets/transcripts/breaking_bad_chemistry.json',     // yt: FWgAvSGE5_U — BytesizeScience
+  // The Office — official NBC channel (seriesId: the_office)
+  'assets/transcripts/the_office_funniest.json',        // yt: ulxDhZIaSCU — official NBC
+  'assets/transcripts/the_office_dwight.json',          // yt: GU2W_nlijx0  — official NBC
+  'assets/transcripts/the_office_michael_scott.json',   // yt: IBJJrZ5LAVQ  — official NBC
+  // Friends — official Warner Bros. TV (seriesId: friends)
+  'assets/transcripts/friends_greatest.json',           // yt: 1kRbLOEICOQ  — official WB
+  'assets/transcripts/friends_season1.json',            // yt: Vh-URNoi5LM  — official WB
+  // Legacy demo
   'assets/transcripts/demo_travel_vlog.json',
   'assets/transcripts/demo_tech_talk.json',
 ];

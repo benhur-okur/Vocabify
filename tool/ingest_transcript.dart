@@ -95,6 +95,7 @@ Future<void> _runYoutubeMode(Map<String, String> flags, _Log log) async {
   final lang = flags['lang'] ?? 'en';
   final movieId = flags['movieId'] ?? '';
   final title = flags['title'] ?? '';
+  final seriesId = flags['seriesId'];
   final tags = _parseTags(flags['tags']);
 
   final yt = YoutubeExplode();
@@ -202,6 +203,7 @@ Future<void> _runYoutubeMode(Map<String, String> flags, _Log log) async {
 
     _writeOutput(
       movieId: movieId,
+      seriesId: seriesId,
       title: title,
       youtubeId: videoId,
       tags: tags,
@@ -228,10 +230,8 @@ Future<void> _runFileMode(Map<String, String> flags, _Log log) async {
 
   final movieId = flags['movieId']!;
   final title = flags['title']!;
+  final seriesId = flags['seriesId'];
   final tags = _parseTags(flags['tags']);
-  // If no --youtubeId is passed, we still write something so the app can
-  // render subtitles; the video simply won't have a playable source until
-  // you edit the JSON to set youtubeVideoId.
   final youtubeId = flags['youtubeId'] ?? '';
 
   final file = File(path);
@@ -283,6 +283,7 @@ Future<void> _runFileMode(Map<String, String> flags, _Log log) async {
 
   _writeOutput(
     movieId: movieId,
+    seriesId: seriesId,
     title: title,
     youtubeId: youtubeId,
     tags: tags,
@@ -659,6 +660,7 @@ class _RawCaption {
 
 void _writeOutput({
   required String movieId,
+  String? seriesId,
   required String title,
   required String youtubeId,
   required List<String> tags,
@@ -671,8 +673,9 @@ void _writeOutput({
     exit(67);
   }
 
-  final out = {
+  final out = <String, dynamic>{
     'movieId': movieId,
+    if (seriesId != null) 'seriesId': seriesId,
     'movieTitle': title,
     'youtubeVideoId': youtubeId,
     'topicTags': tags,

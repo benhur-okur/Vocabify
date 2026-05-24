@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Vocabify – iPhone 16e",
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "5F622C12-9035-477C-8A1F-9D5D59E440A8",
+      "flutterMode": "debug"
+    },
+    {
+      "name": "Vocabify – iPhone 16e (release)",
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "5F622C12-9035-477C-8A1F-9D5D59E440A8",
+      "flutterMode": "release"
+    }
+  ]
+}

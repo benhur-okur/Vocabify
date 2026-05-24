@@ -62,6 +62,25 @@ const mockWords = <VocabularyWord>[
   VocabularyWord(id: 'w_cinema_9', term: 'spoiler', meaning: 'a detail that ruins surprise', exampleSentence: 'No spoilers!', categoryId: 'cinema', difficulty: WordDifficulty.easy, cefrLevel: CefrLevel.b1, tags: ['cinema']),
   VocabularyWord(id: 'w_cinema_10', term: 'twist', meaning: 'an unexpected story change', exampleSentence: 'Surprising twist.', categoryId: 'cinema', difficulty: WordDifficulty.medium, cefrLevel: CefrLevel.b1, tags: ['cinema', 'story']),
 
+  // Cybersecurity / Hacking (Mr. Robot, Black Mirror territory)
+  VocabularyWord(id: 'w_cyber_1', term: 'exploit', meaning: 'to take advantage of a vulnerability', exampleSentence: 'The exploit gave full access.', categoryId: 'tech', difficulty: WordDifficulty.hard, cefrLevel: CefrLevel.c1, tags: ['security', 'hacking']),
+  VocabularyWord(id: 'w_cyber_2', term: 'vulnerability', meaning: 'a weakness in a system that can be attacked', exampleSentence: 'A zero-day vulnerability was found.', categoryId: 'tech', difficulty: WordDifficulty.hard, cefrLevel: CefrLevel.b2, tags: ['security', 'network']),
+  VocabularyWord(id: 'w_cyber_3', term: 'malware', meaning: 'malicious software designed to damage systems', exampleSentence: 'The malware spread overnight.', categoryId: 'tech', difficulty: WordDifficulty.medium, cefrLevel: CefrLevel.b2, tags: ['security', 'software']),
+  VocabularyWord(id: 'w_cyber_4', term: 'phishing', meaning: 'a scam that tricks people into revealing passwords', exampleSentence: 'The phishing email looked real.', categoryId: 'tech', difficulty: WordDifficulty.medium, cefrLevel: CefrLevel.b2, tags: ['security', 'scam']),
+  VocabularyWord(id: 'w_cyber_5', term: 'anonymous', meaning: 'having no known name or identity', exampleSentence: 'The hacker remained anonymous.', categoryId: 'tech', difficulty: WordDifficulty.easy, cefrLevel: CefrLevel.b1, tags: ['security', 'privacy']),
+  VocabularyWord(id: 'w_cyber_6', term: 'breach', meaning: 'unauthorized access to a secure system', exampleSentence: 'The data breach exposed millions.', categoryId: 'tech', difficulty: WordDifficulty.medium, cefrLevel: CefrLevel.b2, tags: ['security', 'data']),
+  VocabularyWord(id: 'w_cyber_7', term: 'privilege', meaning: 'special access rights in a computer system', exampleSentence: 'Admin privilege is required.', categoryId: 'tech', difficulty: WordDifficulty.medium, cefrLevel: CefrLevel.b2, tags: ['security', 'software']),
+  VocabularyWord(id: 'w_cyber_8', term: 'corrupt', meaning: 'to cause errors or damage in data', exampleSentence: 'The file became corrupt.', categoryId: 'tech', difficulty: WordDifficulty.easy, cefrLevel: CefrLevel.b1, tags: ['software', 'data']),
+  VocabularyWord(id: 'w_cyber_9', term: 'intercept', meaning: 'to secretly capture data in transit', exampleSentence: 'They intercepted the message.', categoryId: 'tech', difficulty: WordDifficulty.medium, cefrLevel: CefrLevel.b2, tags: ['security', 'network']),
+  VocabularyWord(id: 'w_cyber_10', term: 'infiltrate', meaning: 'to secretly enter a group or system', exampleSentence: 'He infiltrated the corporation.', categoryId: 'tech', difficulty: WordDifficulty.hard, cefrLevel: CefrLevel.c1, tags: ['security', 'hacking']),
+
+  // Drama / Workplace (The Office, Succession territory)
+  VocabularyWord(id: 'w_drama_1', term: 'promotion', meaning: 'being moved to a higher job position', exampleSentence: 'She got the promotion.', categoryId: 'business', difficulty: WordDifficulty.easy, cefrLevel: CefrLevel.a2, tags: ['work', 'career']),
+  VocabularyWord(id: 'w_drama_2', term: 'awkward', meaning: 'causing social discomfort or embarrassment', exampleSentence: 'An awkward silence followed.', categoryId: 'daily', difficulty: WordDifficulty.easy, cefrLevel: CefrLevel.b1, tags: ['social', 'daily']),
+  VocabularyWord(id: 'w_drama_3', term: 'negotiate', meaning: 'to discuss terms to reach an agreement', exampleSentence: 'They negotiated the salary.', categoryId: 'business', difficulty: WordDifficulty.medium, cefrLevel: CefrLevel.b2, tags: ['business', 'work']),
+  VocabularyWord(id: 'w_drama_4', term: 'resignation', meaning: 'formally quitting a job', exampleSentence: 'He handed in his resignation.', categoryId: 'business', difficulty: WordDifficulty.medium, cefrLevel: CefrLevel.b2, tags: ['work', 'career']),
+  VocabularyWord(id: 'w_drama_5', term: 'mediocre', meaning: 'of only average quality, not very good', exampleSentence: 'The performance was mediocre.', categoryId: 'daily', difficulty: WordDifficulty.medium, cefrLevel: CefrLevel.b2, tags: ['quality', 'daily']),
+
   // Science
   VocabularyWord(id: 'w_sci_1', term: 'hypothesis', meaning: 'a testable proposed explanation', exampleSentence: 'Test the hypothesis.', categoryId: 'science', difficulty: WordDifficulty.medium, cefrLevel: CefrLevel.c1, tags: ['science']),
   VocabularyWord(id: 'w_sci_2', term: 'gravity', meaning: 'force pulling masses together', exampleSentence: 'Gravity on Earth.', categoryId: 'science', difficulty: WordDifficulty.easy, cefrLevel: CefrLevel.b1, tags: ['science', 'physics']),

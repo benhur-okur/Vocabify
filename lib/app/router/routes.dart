@@ -8,4 +8,6 @@ class Routes {
   static const weeklyTest = '/weekly-test';
   static const ranking = '/ranking';
   static const profile = '/profile';
+  static const editInterests = '/profile/edit-interests';
+  static const editMovies = '/profile/edit-movies';
 }

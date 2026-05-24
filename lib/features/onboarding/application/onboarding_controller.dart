@@ -87,6 +87,16 @@ class OnboardingController extends Notifier<OnboardingState> {
 
     state = state.copyWith(isCompleted: true);
   }
+
+  /// Persists the current in-memory selections without touching isCompleted.
+  /// Used by the edit-preferences screens after onboarding is done.
+  Future<void> saveSelections() async {
+    final storage = ref.read(localStorageProvider);
+    await storage.setStringList(
+        StorageKeys.selectedInterests, state.selectedInterestIds.toList());
+    await storage.setStringList(
+        StorageKeys.selectedMovies, state.selectedMovieIds.toList());
+  }
 }
 
 final onboardingControllerProvider =

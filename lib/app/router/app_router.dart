@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/onboarding/application/onboarding_controller.dart';
+import '../../features/onboarding/presentation/screens/edit_interests_screen.dart';
+import '../../features/onboarding/presentation/screens/edit_movies_screen.dart';
 import '../../features/onboarding/presentation/screens/interest_selection_screen.dart';
 import '../../features/onboarding/presentation/screens/movie_preference_screen.dart';
 import '../../features/onboarding/presentation/screens/welcome_screen.dart';
@@ -114,6 +116,16 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             GoRoute(
               path: Routes.profile,
               builder: (_, __) => const ProfileScreen(),
+              routes: [
+                GoRoute(
+                  path: 'edit-interests',
+                  builder: (_, __) => const EditInterestsScreen(),
+                ),
+                GoRoute(
+                  path: 'edit-movies',
+                  builder: (_, __) => const EditMoviesScreen(),
+                ),
+              ],
             ),
           ]),
         ],

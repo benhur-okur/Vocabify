@@ -15,6 +15,13 @@ class InterestClusters {
       'database', 'interface', 'screen', 'click', 'internet', 'website',
       'browser', 'cloud', 'sync', 'install', 'update', 'plugin', 'feature',
       'build', 'deploy', 'release', 'crash', 'cache', 'memory', 'processor',
+      // cybersecurity — appears in Mr. Robot, Black Mirror, hacking talks
+      'hack', 'hacker', 'hacking', 'exploit', 'vulnerability', 'malware',
+      'phishing', 'breach', 'encrypt', 'decrypt', 'anonymous', 'privilege',
+      'infiltrate', 'intercept', 'corrupt', 'attack', 'threat', 'secure',
+      'security', 'rootkit', 'backdoor', 'payload', 'inject', 'script',
+      'terminal', 'root', 'admin', 'access', 'credential', 'password',
+      'corporate', 'surveillance', 'monitor', 'trace', 'proxy', 'vpn',
     ],
     'business': [
       'revenue', 'profit', 'margin', 'customer', 'market', 'strategy',
