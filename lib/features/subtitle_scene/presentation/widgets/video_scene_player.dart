@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import '../../../../core/notifications/scene_notification_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -245,20 +245,32 @@ class VideoScenePlayerState extends ConsumerState<VideoScenePlayer> {
   }
 
   Future<void> openExternally() async {
-    if (widget.videoId.isEmpty) return;
-    final startSec = widget.startMs ~/ 1000;
-    final uri = Uri.parse(
-      'https://www.youtube.com/watch?v=${widget.videoId}&t=${startSec}s',
+  if (widget.videoId.isEmpty) return;
+
+  final startSec = widget.startMs ~/ 1000;
+
+  final clipSeconds =
+      ((widget.endMs - widget.startMs) / 1000).ceil();
+
+  await SceneNotificationService.instance.scheduleSceneReminder(
+    secondsFromNow: clipSeconds,
+  );
+
+  final uri = Uri.parse(
+    'https://www.youtube.com/watch?v=${widget.videoId}&t=${startSec}s',
+  );
+
+  try {
+    await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
     );
+  } catch (_) {
     try {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } catch (_) {
-      // Fallback: in-app webview if external can't handle it.
-      try {
-        await launchUrl(uri);
-      } catch (_) {}
-    }
+      await launchUrl(uri);
+    } catch (_) {}
   }
+}
 
   @override
   void dispose() {
