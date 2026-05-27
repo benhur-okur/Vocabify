@@ -6,6 +6,8 @@ import '../../../core/analytics/analytics_service.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/storage/local_storage.dart';
 import '../../../core/storage/storage_keys.dart';
+import '../../../core/supabase/supabase_client.dart';
+import '../../auth/application/auth_controller.dart';
 
 @immutable
 class OnboardingState {
@@ -34,15 +36,25 @@ class OnboardingState {
 class OnboardingController extends Notifier<OnboardingState> {
   @override
   OnboardingState build() {
+    final user = ref.watch(currentUserProvider);
     final storage = ref.watch(localStorageProvider);
+
+    // isCompleted comes from the user's Supabase profile — always correct
+    // regardless of which device or which account is active.
+    final isCompleted = user?.onboardingCompleted ?? false;
+
+    // Interests and movies are cached locally, scoped by user ID so that
+    // switching accounts never leaks one user's selections to another.
+    final uid = user?.id ?? 'anonymous';
+    final interestsKey = '${StorageKeys.selectedInterests}_$uid';
+    final moviesKey = '${StorageKeys.selectedMovies}_$uid';
+
     return OnboardingState(
-      isCompleted: storage.getBool(StorageKeys.onboardingCompleted) ?? false,
+      isCompleted: isCompleted,
       selectedInterestIds:
-          (storage.getStringList(StorageKeys.selectedInterests) ?? const [])
-              .toSet(),
+          (storage.getStringList(interestsKey) ?? const []).toSet(),
       selectedMovieIds:
-          (storage.getStringList(StorageKeys.selectedMovies) ?? const [])
-              .toSet(),
+          (storage.getStringList(moviesKey) ?? const []).toSet(),
     );
   }
 
@@ -73,29 +85,72 @@ class OnboardingController extends Notifier<OnboardingState> {
       state.selectedMovieIds.length >= AppConstants.minMoviesToFinish;
 
   Future<void> complete() async {
+    final user = ref.read(currentUserProvider);
+    final uid = user?.id ?? 'anonymous';
+    final interests = state.selectedInterestIds.toList();
+    final movies = state.selectedMovieIds.toList();
+
+    // Persist selections locally (user-scoped).
     final storage = ref.read(localStorageProvider);
-    await storage.setStringList(
-        StorageKeys.selectedInterests, state.selectedInterestIds.toList());
-    await storage.setStringList(
-        StorageKeys.selectedMovies, state.selectedMovieIds.toList());
-    await storage.setBool(StorageKeys.onboardingCompleted, true);
+    await storage.setStringList('${StorageKeys.selectedInterests}_$uid', interests);
+    await storage.setStringList('${StorageKeys.selectedMovies}_$uid', movies);
 
     ref.read(analyticsServiceProvider).track(OnboardingCompleted(
-          interestIds: state.selectedInterestIds.toList(),
-          movieIds: state.selectedMovieIds.toList(),
+          interestIds: interests,
+          movieIds: movies,
         ));
 
-    state = state.copyWith(isCompleted: true);
+    // Mark complete in Supabase and sync interests in one round-trip.
+    await _syncCompletion(uid: uid, interests: interests);
+
+    // Update the in-memory AppUser so the router re-evaluates immediately
+    // without waiting for a full auth re-fetch.
+    ref.read(authControllerProvider.notifier).markOnboardingComplete();
   }
 
   /// Persists the current in-memory selections without touching isCompleted.
   /// Used by the edit-preferences screens after onboarding is done.
   Future<void> saveSelections() async {
+    final user = ref.read(currentUserProvider);
+    final uid = user?.id ?? 'anonymous';
+    final interests = state.selectedInterestIds.toList();
+
     final storage = ref.read(localStorageProvider);
+    await storage.setStringList('${StorageKeys.selectedInterests}_$uid', interests);
     await storage.setStringList(
-        StorageKeys.selectedInterests, state.selectedInterestIds.toList());
-    await storage.setStringList(
-        StorageKeys.selectedMovies, state.selectedMovieIds.toList());
+        '${StorageKeys.selectedMovies}_$uid', state.selectedMovieIds.toList());
+
+    _syncInterests(uid: uid, interests: interests);
+  }
+
+  Future<void> _syncCompletion({
+    required String uid,
+    required List<String> interests,
+  }) async {
+    if (uid == 'anonymous') return;
+    try {
+      await ref.read(supabaseClientProvider).from('profiles').update({
+        'onboarding_completed': true,
+        'interests': interests,
+      }).eq('id', uid);
+    } catch (e) {
+      debugPrint('[OnboardingSync] completion sync failed: $e');
+    }
+  }
+
+  Future<void> _syncInterests({
+    required String uid,
+    required List<String> interests,
+  }) async {
+    if (uid == 'anonymous') return;
+    try {
+      await ref
+          .read(supabaseClientProvider)
+          .from('profiles')
+          .update({'interests': interests}).eq('id', uid);
+    } catch (e) {
+      debugPrint('[OnboardingSync] interests sync failed: $e');
+    }
   }
 }
 

@@ -1,8 +1,10 @@
 import 'dart:math' as math;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/models/cefr_level.dart';
+import '../../../core/supabase/supabase_client.dart';
 import '../data/skill_repository.dart';
 
 /// A windowed sample of a recent answer.
@@ -123,6 +125,7 @@ class SkillTracker extends Notifier<SkillState> {
     final repo = ref.read(skillRepositoryProvider);
     if (nextLevel != state.level) {
       await repo.saveLevel(nextLevel);
+      _syncLevel(nextLevel);
     }
 
     state = state.copyWith(
@@ -130,6 +133,20 @@ class SkillTracker extends Notifier<SkillState> {
       emaAccuracy: nextEma,
       recent: recent,
     );
+  }
+
+  Future<void> _syncLevel(CefrLevel level) async {
+    final uid =
+        ref.read(supabaseClientProvider).auth.currentUser?.id;
+    if (uid == null) return;
+    try {
+      await ref
+          .read(supabaseClientProvider)
+          .from('profiles')
+          .update({'cefr_level': level.name}).eq('id', uid);
+    } catch (e) {
+      debugPrint('[SkillSync] level sync failed: $e');
+    }
   }
 
   /// Proficiency score in [0, 1] = mastery at current level.

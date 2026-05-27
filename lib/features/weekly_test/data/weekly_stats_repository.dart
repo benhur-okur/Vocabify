@@ -1,10 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' hide LocalStorage;
 
 import '../../../core/storage/local_storage.dart';
 import '../../../core/storage/storage_keys.dart';
+import '../../../core/supabase/supabase_client.dart';
+import '../../auth/application/auth_controller.dart';
 import '../domain/models/weekly_stats.dart';
 
 abstract class WeeklyStatsRepository {
@@ -16,11 +20,12 @@ abstract class WeeklyStatsRepository {
 }
 
 class LocalWeeklyStatsRepository implements WeeklyStatsRepository {
-  LocalWeeklyStatsRepository(this._storage) {
+  LocalWeeklyStatsRepository(this._storage, this._userId) {
     _current = _rolloverIfNeeded(_loadOrInit());
   }
 
   final LocalStorage _storage;
+  final String _userId;
   late WeeklyStats _current;
   final StreamController<WeeklyStats> _controller =
       StreamController<WeeklyStats>.broadcast();
@@ -69,8 +74,10 @@ class LocalWeeklyStatsRepository implements WeeklyStatsRepository {
     _controller.add(_current);
   }
 
+  String get _key => '${StorageKeys.weeklyScore}_$_userId';
+
   WeeklyStats _loadOrInit() {
-    final raw = _storage.getString(StorageKeys.weeklyScore);
+    final raw = _storage.getString(_key);
     if (raw == null) return WeeklyStats.empty(_startOfThisWeek());
     try {
       final m = jsonDecode(raw) as Map<String, dynamic>;
@@ -99,7 +106,7 @@ class LocalWeeklyStatsRepository implements WeeklyStatsRepository {
 
   Future<void> _save(WeeklyStats s) async {
     await _storage.setString(
-      StorageKeys.weeklyScore,
+      _key,
       jsonEncode({
         'weekStart': s.weekStart.toIso8601String(),
         'quizzesCompleted': s.quizzesCompleted,
@@ -119,8 +126,84 @@ class LocalWeeklyStatsRepository implements WeeklyStatsRepository {
   }
 }
 
+/// Wraps [LocalWeeklyStatsRepository] and syncs every write to Supabase.
+/// The exposed stream emits only AFTER the sync completes so that
+/// [weeklyRankingProvider] never re-fetches before the row is in the DB.
+class SupabaseBackedWeeklyStatsRepository implements WeeklyStatsRepository {
+  SupabaseBackedWeeklyStatsRepository(this._local, this._client);
+
+  final LocalWeeklyStatsRepository _local;
+  final SupabaseClient _client;
+  final StreamController<WeeklyStats> _controller =
+      StreamController<WeeklyStats>.broadcast();
+
+  String? get _uid => _client.auth.currentUser?.id;
+
+  void dispose() => _controller.close();
+
+  @override
+  WeeklyStats currentWeek() => _local.currentWeek();
+
+  @override
+  Stream<WeeklyStats> watchCurrentWeek() async* {
+    yield _local.currentWeek();
+    yield* _controller.stream;
+  }
+
+  @override
+  Future<void> recordQuizResult({
+    required int correct,
+    required int total,
+  }) async {
+    await _local.recordQuizResult(correct: correct, total: total);
+    await _sync(_local.currentWeek());
+    _controller.add(_local.currentWeek());
+  }
+
+  @override
+  Future<void> recordSceneCompletion() async {
+    await _local.recordSceneCompletion();
+    await _sync(_local.currentWeek());
+    _controller.add(_local.currentWeek());
+  }
+
+  @override
+  Future<void> reset() async {
+    await _local.reset();
+    await _sync(_local.currentWeek());
+    _controller.add(_local.currentWeek());
+  }
+
+  Future<void> _sync(WeeklyStats s) async {
+    final uid = _uid;
+    if (uid == null) return;
+    final ws = s.weekStart;
+    final weekStart =
+        '${ws.year}-${ws.month.toString().padLeft(2, '0')}-${ws.day.toString().padLeft(2, '0')}';
+    try {
+      await _client.from('weekly_stats').upsert({
+        'user_id': uid,
+        'week_start': weekStart,
+        'points': s.pointsEarned,
+        'quizzes_completed': s.quizzesCompleted,
+        'scenes_completed': s.scenesCompleted,
+        'correct_answers': s.correctAnswers,
+        'total_answers': s.totalAnswers,
+        'updated_at': DateTime.now().toIso8601String(),
+      }, onConflict: 'user_id,week_start');
+    } catch (e) {
+      debugPrint('[WeeklyStats] Supabase sync failed: $e');
+    }
+  }
+}
+
 final weeklyStatsRepositoryProvider = Provider<WeeklyStatsRepository>((ref) {
-  return LocalWeeklyStatsRepository(ref.watch(localStorageProvider));
+  final userId = ref.watch(currentUserProvider)?.id ?? 'anonymous';
+  final local = LocalWeeklyStatsRepository(ref.watch(localStorageProvider), userId);
+  final client = ref.watch(supabaseClientProvider);
+  final repo = SupabaseBackedWeeklyStatsRepository(local, client);
+  ref.onDispose(repo.dispose);
+  return repo;
 });
 
 final weeklyStatsStreamProvider = StreamProvider<WeeklyStats>((ref) {
